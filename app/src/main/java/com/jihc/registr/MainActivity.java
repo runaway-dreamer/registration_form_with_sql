@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,12 +93,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     sqLiteDatabase.insert(TABLE_USER, null, userValue);
 
                     Toast.makeText(this, "Account has been successfully created!", Toast.LENGTH_SHORT).show();
+                    showDatabaseData();
+
                 }else{
                     Toast.makeText(this, "Please, fill all info", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
         }
+    }
 
+    public void showDatabaseData(){
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_USER, null);
+
+        if ((cursor != null && cursor.getCount() > 0)) {
+            while (cursor.moveToNext()) {
+                String name = cursor.getString(cursor.getColumnIndex(COLUMN_INFO));
+                String email = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL));
+                String password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD));
+                String confirm_pass = cursor.getString(cursor.getColumnIndex(COLUMN_CONFIRM_PASSWORD));
+
+                Log.i("Database", "Name" + name);
+                Log.i("Database", "Email" + email);
+                Log.i("Database", "Password" + password);
+                Log.i("Database", "Confirm_pass" + confirm_pass);
+            }
+
+        }
     }
 }
