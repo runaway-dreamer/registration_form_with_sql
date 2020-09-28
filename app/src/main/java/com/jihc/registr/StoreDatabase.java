@@ -13,10 +13,9 @@ public class StoreDatabase extends SQLiteOpenHelper {
 
     public static final String TABLE_USER = "user_store";
 
-    public static final String COLUMN_INFO = "user_name";
+    public static final String COLUMN_INFO = "user_full_name";
     public static final String COLUMN_EMAIL = "user_email";
     public static final String COLUMN_PASSWORD = "user_password";
-    public static final String COLUMN_CONFIRM_PASSWORD = "user_confirm_pass";
 
     Context context;
 
@@ -28,18 +27,16 @@ public class StoreDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE" + TABLE_USER + "(" +
-                COLUMN_INFO + "TEXT, " +
-                COLUMN_EMAIL + "TEXT, " +
-                COLUMN_PASSWORD + "TEXT, " +
-                COLUMN_CONFIRM_PASSWORD + "TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_USER + "(" +
+                COLUMN_INFO + " TEXT, " +
+                COLUMN_EMAIL + " TEXT , " +
+                COLUMN_PASSWORD + " TEXT )");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS" + TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
 
         onCreate(db);
     }
-
 }
